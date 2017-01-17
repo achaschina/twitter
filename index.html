@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html ng-app="Twitter">
+<head>
+	<title>Twitter</title>
+	<script src='https://code.angularjs.org/1.0.0rc3/angular-1.0.0rc3.min.js'></script>
+	<script src='https://code.angularjs.org/1.0.0rc3/angular-resource-1.0.0rc3.min.js'></script>
+	<script src='app.js'></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div ng-controller="TwitterCtrl">
+	<table class="table table-striped">
+		<tr ng-repeat="tweet in twitterResult.results">
+			<td>{{tweet.text}}</td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

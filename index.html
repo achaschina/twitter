@@ -1,20 +1,55 @@
 <!DOCTYPE html>
-<html ng-app="Twitter">
+<html ng-app="twitterApp">
 <head>
-	<title>Twitter</title>
-	<script src='https://code.angularjs.org/1.0.0rc3/angular-1.0.0rc3.min.js'></script>
-	<script src='https://code.angularjs.org/1.0.0rc3/angular-resource-1.0.0rc3.min.js'></script>
-	<script src='app.js'></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<title>AngularJS Instant Tweet Search Application</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="scripts/oauth.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.js"></script>
+	<script src="scripts/app.js"></script>
+	<script src="scripts/controller.js"></script>
+	<script src="scripts/service.js"></script>
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div ng-controller="TwitterCtrl">
-	<table class="table table-striped">
-		<tr ng-repeat="tweet in twitterResult.results">
-			<td>{{tweet.text}}</td>
-		</tr>
-	</table>
+<div class="container" ng-controller="TwitterController">
+	<h1>AngularJS Instant Tweet Search Application</h1>
+	<div class="row">
+		<div class="col-xs-6">
+			<button ng-click="connectButton()" id="connectButton" type="button" class="btn btn-primary">Connect Twitter</button>
+			<button ng-click="refreshTimeline()" id="getTimelineButton" type="button" class="btn btn-info" style="display:none;">Get My Timeline</button>
+			<button ng-click="signOut()" id="signOut" type="button" class="btn btn-link" style="display:none;">Sign Out</button>
+		</div>
+		<div class="col-xs-6">
+			<input type="text" ng-model="searchTerm" class="form-control" id="searchBox" placeholder="Enter search term here" ng-show="connectedTwitter" />
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12" id="results">
+			<div class="row" ng-repeat="t in tweets | filter:searchTerm">
+
+				<div class="col-xs-2 col-sm-1">
+					<img ng-src="{{t.user.profile_image_url}}" class="img-circle">
+				</div>
+				<div class="col-xs-10 col-sm-11">
+					<small>{{t.user.name}}</small>
+					<br> <span ng-bind-html="t.text"></span>
+				</div>
+
+			</div>
+
+			<div ng-show="rateLimitError">
+				Rate limit reached. You are making too many requests.
+			</div>
+			<div>
+				<br/>
+				<input type="button" class="btn btn-info" id="load-more" ng-click="refreshTimeline(tweets[tweets.length-1].id)" ng-show="connectedTwitter" value="Load More" />
+			</div>
+		</div>
+	</div>
 </div>
 </body>
 </html>

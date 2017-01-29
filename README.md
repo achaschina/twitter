@@ -7,6 +7,7 @@
    - Used library
       - jQuery 
 - **Application overview**
+___________
 This application searches for a keyword on the social network Twitter.
 The user receives:
    - Tweets author userpic

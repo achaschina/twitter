@@ -10,7 +10,7 @@ app.controller('TwitterController', function($scope, $q, twitterService) {
         }, function() {
             $scope.rateLimitError = true;
         });
-    }
+    };
 
     //when the user clicks the connect twitter button, the popup authorization window opens
     $scope.connectButton = function() {
@@ -26,7 +26,7 @@ app.controller('TwitterController', function($scope, $q, twitterService) {
 
             }
         });
-    }
+    };
 
     $scope.getQuery = function (maxId) {
         twitterService.getLatestTweets(maxId).then(function(data) {
@@ -35,7 +35,7 @@ app.controller('TwitterController', function($scope, $q, twitterService) {
         }, function() {
             $scope.rateLimitError = true;
         });
-    }
+    };
 
     //sign out clears the OAuth cache, the user will have to reauthenticate when returning
     $scope.signOut = function() {
@@ -47,7 +47,7 @@ app.controller('TwitterController', function($scope, $q, twitterService) {
                 $scope.connectedTwitter = false
             })
         });
-    }
+    };
 
     //if the user is a returning user, hide the sign in button and display the tweets
     if (twitterService.isReady()) {

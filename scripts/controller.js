@@ -28,6 +28,15 @@ app.controller('TwitterController', function($scope, $q, twitterService) {
         });
     }
 
+    $scope.getQuery = function (maxId) {
+        twitterService.getLatestTweets(maxId).then(function(data) {
+            $scope.tweets.length = 0;
+            $scope.tweets = $scope.tweets.concat(data);
+        }, function() {
+            $scope.rateLimitError = true;
+        });
+    }
+
     //sign out clears the OAuth cache, the user will have to reauthenticate when returning
     $scope.signOut = function() {
         twitterService.clearCache();
